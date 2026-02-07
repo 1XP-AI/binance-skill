@@ -8,6 +8,11 @@ This file intentionally tracks current and upcoming tasks for the **public-only*
 - Keep docs aligned with supported endpoints
 - Ensure tests remain green
 
+## Follow-ups
+
+- Add GitHub Actions workflows (CI / deploy-docs / publish) once workflow-scope push is available
+- Optional tests: error response handling (-1121), 418 IP-ban handling, Spot 24hr ticker
+
 ## References
 
 - npm: https://www.npmjs.com/package/@1xp-ai/binance-skill
