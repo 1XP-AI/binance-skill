@@ -1,0 +1,17 @@
+{
+  "name": "binance-market-data",
+  "version": "1.4.0",
+  "description": "Public-only Binance market data skill for Spot and USDT-M Futures.",
+  "homepage": "https://1xp-ai.github.io/binance-skill/",
+  "repository": "https://github.com/1XP-AI/binance-skill",
+  "npm": "https://www.npmjs.com/package/@1xp-ai/binance-skill",
+  "skill": "SKILL.md",
+  "documents": [
+    "SECURITY.md",
+    "HEARTBEAT.md"
+  ],
+  "metadata": {
+    "api_base": "https://api.binance.com",
+    "public_only": true
+  }
+}

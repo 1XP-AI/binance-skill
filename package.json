@@ -1,0 +1,59 @@
+{
+	"name": "@1xp-ai/binance-skill",
+	"version": "1.4.0",
+	"description": "Public-only Binance market data skill for Spot and USDT-M Futures.",
+	"type": "module",
+	"bin": {
+		"binance-skill": "dist/cli.js"
+	},
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist",
+		"skill"
+	],
+	"scripts": {
+		"build": "tsc -p tsconfig.json",
+		"dev": "tsc -w -p tsconfig.json",
+		"lint": "eslint . && node scripts/validate-md-tables.js",
+		"prepublishOnly": "npm run build",
+		"pretest": "npm run build",
+		"test:unit": "vitest",
+		"test:watch": "vitest",
+		"test": "npm run test:unit -- --run",
+		"precoverage": "npm run build",
+		"coverage": "npx vitest run --coverage"
+	},
+	"keywords": [
+		"binance",
+		"spot",
+		"futures",
+		"market-data",
+		"ai",
+		"crypto",
+		"skill"
+	],
+	"author": "1XP-AI",
+	"license": "MIT",
+	"homepage": "https://1xp-ai.github.io/binance-skill/",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/1XP-AI/binance-skill.git"
+	},
+	"bugs": {
+		"url": "https://github.com/1XP-AI/binance-skill/issues"
+	},
+	"devDependencies": {
+		"@eslint/compat": "^2.0.2",
+		"@eslint/js": "^9.39.2",
+		"@types/node": "^25",
+		"@vitest/coverage-v8": "^4.0.18",
+		"eslint": "^9.39.2",
+		"globals": "^17.3.0",
+		"husky": "^9.1.7",
+		"typescript": "^5.9.3",
+		"typescript-eslint": "^8.53.1",
+		"vitest": "^4.0.18"
+	},
+	"dependencies": {}
+}

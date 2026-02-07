@@ -1,0 +1,8 @@
+# Default reviewers
+* @1xp-ai/maintainers
+
+# Sensitive paths
+/.github/            @1xp-ai/maintainers
+/.github/workflows/  @1xp-ai/maintainers
+/package.json        @1xp-ai/maintainers
+/skill/              @1xp-ai/maintainers
