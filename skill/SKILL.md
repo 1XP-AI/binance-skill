@@ -86,3 +86,4 @@ npm test
 - [Documentation](https://1xp-ai.github.io/binance-skill/)
 - [npm Package](https://www.npmjs.com/package/@1xp-ai/binance-skill)
 - [Repository](https://github.com/1XP-AI/binance-skill)
+
