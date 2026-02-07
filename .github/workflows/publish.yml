@@ -1,0 +1,99 @@
+name: Publish to npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      skip_bump:
+        description: 'Skip version bump (use current package.json version)'
+        required: false
+        default: 'true'
+        type: boolean
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Determine version bump
+        id: bump
+        if: ${{ github.event.inputs.skip_bump != 'true' }}
+        run: |
+          # Get commits since last tag
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -z "$LAST_TAG" ]; then
+            COMMITS=$(git log --oneline)
+          else
+            COMMITS=$(git log ${LAST_TAG}..HEAD --oneline)
+          fi
+          
+          # Determine bump type based on conventional commits
+          if echo "$COMMITS" | grep -qE "^[a-f0-9]+ (feat|fix|docs|style|refactor|perf|test|chore)(\(.+\))?!:|BREAKING CHANGE"; then
+            echo "type=major" >> $GITHUB_OUTPUT
+          elif echo "$COMMITS" | grep -qE "^[a-f0-9]+ feat(\(.+\))?:"; then
+            echo "type=minor" >> $GITHUB_OUTPUT
+          else
+            echo "type=patch" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Bump version
+        if: ${{ github.event.inputs.skip_bump != 'true' }}
+        run: |
+          npm version ${{ steps.bump.outputs.type }} --no-git-tag-version
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+
+      - name: Use current version (skip bump)
+        if: ${{ github.event.inputs.skip_bump == 'true' }}
+        run: |
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+
+      - name: Build
+        run: npm run build
+
+      - name: Commit version bump
+        if: ${{ github.event.inputs.skip_bump != 'true' }}
+        run: |
+          git add package.json package-lock.json
+          git commit -m "chore(release): v${{ env.NEW_VERSION }}"
+          git tag "v${{ env.NEW_VERSION }}"
+          git push origin release --tags
+
+      - name: Tag only (skip bump)
+        if: ${{ github.event.inputs.skip_bump == 'true' }}
+        run: |
+          git tag "v${{ env.NEW_VERSION }}" || true
+          git push origin release --tags || true
+
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
