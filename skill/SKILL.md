@@ -47,7 +47,7 @@ This skill only calls **public** endpoints. No authentication, no private data, 
 | `pingSpot()` | Ping spot API |
 | `getSpotServerTime()` | Spot server time |
 | `getSpotExchangeInfo({ symbol?, symbols? })` | Exchange info |
-| `getSpotTickerPrice(symbol?)` | Ticker price (symbol/all) |
+| `getSpotTickerPrice(symbolOrParams?)` | Ticker price (symbol/all). Accepts `"BTCUSDT"` or `{ symbol: "BTCUSDT" }`. |
 | `getSpotOrderbook(symbol, limit?)` | Order book depth |
 | `getSpotTrades(symbol, limit?)` | Recent trades |
 | `getSpotKlines({ symbol, interval, startTime?, endTime?, limit? })` | Klines |

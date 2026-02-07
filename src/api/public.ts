@@ -97,7 +97,10 @@ export async function getSpotExchangeInfo(params?: {
 
 export type SpotTickerPrice = { symbol: string; price: string };
 
-export async function getSpotTickerPrice(symbol?: string): Promise<SpotTickerPrice | SpotTickerPrice[]> {
+export async function getSpotTickerPrice(
+  symbolOrParams?: string | { symbol?: string }
+): Promise<SpotTickerPrice | SpotTickerPrice[]> {
+  const symbol = typeof symbolOrParams === 'string' ? symbolOrParams : symbolOrParams?.symbol;
   const query = buildQuery({ symbol });
   return (await fetchJsonWithBackoff(`${SPOT_BASE_URL}/api/v3/ticker/price${query}`)) as
     | SpotTickerPrice

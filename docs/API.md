@@ -14,7 +14,7 @@ This skill is **public-only** and does **not** use API keys. It supports a focus
 | Ping | `GET /api/v3/ping` | `pingSpot()` |
 | Server Time | `GET /api/v3/time` | `getSpotServerTime()` |
 | Exchange Info | `GET /api/v3/exchangeInfo` | `getSpotExchangeInfo({ symbol?, symbols? })` |
-| Ticker Price | `GET /api/v3/ticker/price` | `getSpotTickerPrice(symbol?)` |
+| Ticker Price | `GET /api/v3/ticker/price` | `getSpotTickerPrice(symbolOrParams?)` (string or `{ symbol }`) |
 | Order Book | `GET /api/v3/depth` | `getSpotOrderbook(symbol, limit?)` |
 | Recent Trades | `GET /api/v3/trades` | `getSpotTrades(symbol, limit?)` |
 | Klines | `GET /api/v3/klines` | `getSpotKlines({ symbol, interval, startTime?, endTime?, limit? })` |
