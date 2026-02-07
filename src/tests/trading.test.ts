@@ -114,26 +114,26 @@ describe('Trading Logic', () => {
 
   describe('Risk Management', () => {
     it('should reject order exceeding available balance', () => {
-      const availableKRW = 1000000;
+      const availableQuote = 1000000;
       const orderAmount = 1500000;
 
-      const result = checkRisk({ availableKRW, orderAmount });
+      const result = checkRisk({ availableQuote, orderAmount });
       expect(result.isValid).toBe(false);
     });
 
     it('should calculate max buyable quantity', () => {
-      const availableKRW = 1000000;
+      const availableQuote = 1000000;
       const currentPrice = 50000000;
 
-      const maxQty = maxBuyableQty(availableKRW, currentPrice);
+      const maxQty = maxBuyableQty(availableQuote, currentPrice);
       expect(maxQty).toBe(0.02);
     });
 
     it('should enforce minimum order amount', () => {
-      const minOrderKRW = 5000; // 5000 KRW minimum
+      const minOrderQuote = 5000;
       const orderAmount = 3000;
 
-      const result = checkRisk({ availableKRW: 1000000, orderAmount, minOrderKRW });
+      const result = checkRisk({ availableQuote: 1000000, orderAmount, minOrderQuote });
       expect(result.isValid).toBe(false);
     });
   });

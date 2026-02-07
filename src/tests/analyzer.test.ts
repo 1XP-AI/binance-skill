@@ -161,7 +161,7 @@ describe('Analyzer', () => {
   describe('Output Schema', () => {
     it('should return valid AnalysisResult structure', async () => {
       const result = analyzeSnapshot(
-        'BTC/KRW',
+        'BTCUSDT',
         {
           bids: [{ price: 100, qty: 1 }],
           asks: [{ price: 101, qty: 1 }]
@@ -175,7 +175,7 @@ describe('Analyzer', () => {
 
     it('should include all required fields', async () => {
       const result = analyzeSnapshot(
-        'BTC/KRW',
+        'BTCUSDT',
         {
           bids: [{ price: 100, qty: 1 }],
           asks: [{ price: 101, qty: 1 }]
@@ -189,7 +189,7 @@ describe('Analyzer', () => {
 
     it('should include timestamp and currency', async () => {
       const result = analyzeSnapshot(
-        'BTC/KRW',
+        'BTCUSDT',
         {
           bids: [{ price: 100, qty: 1 }],
           asks: [{ price: 101, qty: 1 }]
@@ -197,7 +197,7 @@ describe('Analyzer', () => {
         [{ timestamp: 1, price: 100, qty: 1, is_seller_maker: false }]
       );
       expect(result.timestamp).toBeGreaterThan(0);
-      expect(result.symbol).toBe('BTC/KRW');
+      expect(result.symbol).toBe('BTCUSDT');
     });
   });
 });

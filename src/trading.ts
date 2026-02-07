@@ -87,22 +87,22 @@ export function splitOrder(totalQty: number, maxSingleOrder: number): number[] {
 }
 
 export type RiskCheckInput = {
-	availableKRW: number;
+	availableQuote: number;
 	orderAmount: number;
-	minOrderKRW?: number;
+	minOrderQuote?: number;
 };
 
-export function checkRisk({ availableKRW, orderAmount, minOrderKRW = 0 }: RiskCheckInput): {
+export function checkRisk({ availableQuote, orderAmount, minOrderQuote = 0 }: RiskCheckInput): {
 	isValid: boolean;
 	reasons: string[];
 } {
 	const reasons: string[] = [];
-	if (orderAmount > availableKRW) reasons.push('INSUFFICIENT_BALANCE');
-	if (orderAmount < minOrderKRW) reasons.push('BELOW_MIN_ORDER');
+	if (orderAmount > availableQuote) reasons.push('INSUFFICIENT_BALANCE');
+	if (orderAmount < minOrderQuote) reasons.push('BELOW_MIN_ORDER');
 	return { isValid: reasons.length === 0, reasons };
 }
 
-export function maxBuyableQty(availableKRW: number, currentPrice: number): number {
+export function maxBuyableQty(availableQuote: number, currentPrice: number): number {
 	if (currentPrice <= 0) return 0;
-	return availableKRW / currentPrice;
+	return availableQuote / currentPrice;
 }

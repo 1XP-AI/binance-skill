@@ -100,7 +100,7 @@ Liquidity = normalize(Depth10) + normalize(Slope) − normalize(Spread%)
 ```json
 {
   "timestamp": 1700000000,
-  "symbol": "BTC/KRW",
+  "symbol": "BTCUSDT",
   "orderbook": {
     "obi": {"top1": 0.12, "top5": 0.08, "top10": 0.05},
     "wobi": 0.10,
